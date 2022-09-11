@@ -1,5 +1,5 @@
 # Bachelor_degree_final_project
-The following code is the main source for my final bachelor project.
+The following code is the main source for my final bachelor degree project.
 
 For the final project I used two Arduino UNO boards to design and make a device for disinfecting IT devices. 
 
