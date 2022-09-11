@@ -1,0 +1,78 @@
+#include <Servo.h>
+#define EN 8
+//Direction pin
+#define X_DIR 5
+//Step pin
+#define X_STP 2
+//A498
+int delayTime = 200;
+int stps=5000;
+int button1=0;
+int button2=0;
+Servo servo;
+
+int startFlag = 0;
+unsigned long startTime = 0;
+
+const byte servoPin = A3; // coolant enable
+byte pos = 0;
+
+void step(boolean dir, byte dirPin, byte stepperPin, int steps)
+{
+  digitalWrite(dirPin, dir);
+  delay(100);
+  for (int i = 0; i< steps; i++)
+  {
+    digitalWrite(stepperPin, HIGH);
+    delayMicroseconds(delayTime);
+    digitalWrite(stepperPin, LOW);
+    delayMicroseconds(delayTime);
+  }
+}
+
+void setup()
+{
+  Serial.begin(9600);
+  servo.attach(servoPin);
+  pinMode(12, INPUT);
+  pinMode(13, INPUT);
+
+  pinMode(X_DIR, OUTPUT); pinMode(X_STP,OUTPUT);
+  pinMode(EN, OUTPUT);
+  digitalWrite(EN,LOW);
+}
+void loop()
+{
+  button1 = digitalRead(12);
+  button2 = digitalRead(13);
+  
+  if (button2==LOW){
+    servo.write(0);
+    delay(100);
+  }
+  else {
+    servo.write(180);
+    delay(100);
+  }
+
+  if (button1 == HIGH) {
+    startFlag = 1;
+    startTime = millis();
+    step(true, X_DIR, X_STP, stps);
+  }
+
+  if (startFlag == 1) {
+    Serial.println(millis());
+    Serial.println(startTime);
+    Serial.println(millis() - startTime);
+    if (millis() - startTime > 660000) {
+      servo.write(180);
+      delay(100);
+      step(false, X_DIR, X_STP, stps);
+      startFlag = 0;
+      startTime = 0;
+    }
+  }
+  
+  delay(100); 
+}

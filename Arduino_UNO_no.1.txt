@@ -1,0 +1,73 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+#include <dht.h>
+#include "RTClib.h"
+#define DHT11_PIN 7
+
+dht DHT;
+RTC_DS1307 rtc;
+LiquidCrystal_I2C lcd(0x27, 20, 4);
+
+char daysOfTheWeek[7][12] = {"Dumin", "Luni", "Marti", "Mierc", "Joi", "Viner", "Samba"};
+const int ledPin = 7;
+
+void setup () 
+{
+  Serial.begin(9600);
+  lcd.init();  // initialize the lcd 
+  lcd.backlight();//To Power ON the back light
+  lcd.clear();
+  pinMode(8, OUTPUT);
+
+  if (! rtc.begin()) {
+    lcd.print("Couldn't find RTC");
+    while (1);
+  }
+
+  if (! rtc.isrunning()) {
+    lcd.print("RTC is NOT running!");
+  }
+
+  rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));//auto update from computer time
+  //rtc.adjust(DateTime(2014, 1, 21, 3, 0, 0));// to set the time manually 
+}
+void loop () 
+{
+    DateTime now = rtc.now();
+    int chk = DHT.read11(DHT11_PIN);
+    float temp=(DHT.temperature); 
+    float Hum=(DHT.humidity);
+
+    lcd.setCursor(0, 1);
+    lcd.print("Ora");
+    lcd.print(" ");
+    lcd.print(now.hour(), DEC);
+    lcd.print(':');
+    lcd.print(now.minute(), DEC);
+    lcd.print(':');
+    lcd.print(now.second(), DEC);
+    lcd.print("  ");
+
+    lcd.setCursor(0, 0);
+    lcd.print("Data");
+    lcd.print(" ");
+    lcd.print(daysOfTheWeek[now.dayOfTheWeek()]);
+    lcd.print(" ");
+    lcd.print(now.day(), DEC);
+    lcd.print('/');
+    lcd.print(now.month(), DEC);
+    lcd.print('/');
+    lcd.print(now.year(), DEC);
+    lcd.print("  ");  
+
+    lcd.setCursor(0, 2);
+    lcd.print("Temperatura        C  ");
+    lcd.setCursor(13,2);
+    lcd.print(temp);
+
+    lcd.setCursor(0, 3);
+    lcd.println("Umiditate   ");
+    lcd.setCursor(11,3);
+    lcd.print(Hum);
+    digitalWrite(8, HIGH);
+}
