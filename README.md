@@ -12,3 +12,6 @@ The second code was used to start the phone's disinfection cycle. According to t
 An important point to note is that a gear was attached to the motor to be able to engage the rack within the elevator. 
 
 The entire assembly was designed using the CATIA V5 application and later printed using a 3D printer.
+
+https://user-images.githubusercontent.com/113306975/189547127-1bb82869-4faa-4f1b-a4e8-91ebd0e00f1f.mp4
+
