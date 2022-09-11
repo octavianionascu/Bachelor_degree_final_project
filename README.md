@@ -1,6 +1,7 @@
 # Bachelor_project
 The following code is the main source for my final bachelor project.
-For the final project I've been using two Arduino UNO boards. 
+
+For the final project I used two Arduino UNO boards to design and make a device for disinfecting IT devices. 
 
 The first code was used to display on a 2004 LCD screen relevant information including: date, time, temperature and humidity of the room. This data was acquired using DHT11 and Tiny RTC DS1307 sensors. It is independent of the disinfection cycle, keeping the data in a continuous update as long as it is connected to an electrical current source.
 
