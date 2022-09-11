@@ -8,3 +8,6 @@ The second code was used to start the phone's disinfection cycle. According to t
 - lowering the phone placed on the designated support, by means of the elevator operated by a NEMA 17 stepper motor
 - once reaching the preset maximum point, the elevator in its final position activates two micro switches, one for isolating the enclosure with the help of a slider attached to a servo motor and one for activating the two UV-C LED arrays.
 - the whole process was timed for a cycle long enough to disinfect the user's phone.
+An important point to note is that a gear was attached to the motor to be able to engage the rack within the elevator. 
+
+The entire assembly was designed using the CATIA V5 application and later printed using a 3D printer.
